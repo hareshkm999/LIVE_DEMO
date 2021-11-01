@@ -1,5 +1,6 @@
 import yaml
 import os
+import json
 
 def read_yaml(path_to_yaml: str) -> dict:
     with open(path_to_yaml) as yaml_file:
@@ -18,4 +19,7 @@ def save_local_df(data, data_path, index_status= False):
     print(f"data saved at path {data_path}")
     
 
-        
+def save_reports(report: dict, report_path: str, indentation: 4):
+    with open(report_path, "w") as f:
+        json.dump(report, f, indent=indentation)
+    print(f"reports are saved at {report_path}")

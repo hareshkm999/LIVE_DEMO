@@ -4,14 +4,14 @@ stages:
     cmd: python src/stage_01_load_save.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 04d2c22b8108dd7f94afafc3c60b145d
-      size: 347
+      md5: b9e3118a1a785e25f761219cb96e08c2
+      size: 400
     - path: src/stage_01_load_save.py
       md5: 25458ce4a15a735ead420bf926029a42
       size: 1088
     - path: src/utils/all_utils.py
-      md5: 38118203895d721dbd2834c07f7d8a74
-      size: 515
+      md5: 58c6945e3b6b392289735a699fdc2732
+      size: 700
     outs:
     - path: artifacts/raw_local_dir/data.csv
       md5: 7d814a1bda02145efe703f4e1c01847a
@@ -23,14 +23,14 @@ stages:
       md5: 7d814a1bda02145efe703f4e1c01847a
       size: 93599
     - path: config/config.yaml
-      md5: 04d2c22b8108dd7f94afafc3c60b145d
-      size: 347
+      md5: b9e3118a1a785e25f761219cb96e08c2
+      size: 400
     - path: src/stage_02_split_data.py
       md5: 0a9b502f12ffb7a381739be6c0232cc5
       size: 1701
     - path: src/utils/all_utils.py
-      md5: 38118203895d721dbd2834c07f7d8a74
-      size: 515
+      md5: 58c6945e3b6b392289735a699fdc2732
+      size: 700
     params:
       params.yaml:
         base.random_state: 42
@@ -49,14 +49,14 @@ stages:
       md5: e683c1d146b604dc7ac3a46cfcc079c4
       size: 65483
     - path: config/config.yaml
-      md5: 04d2c22b8108dd7f94afafc3c60b145d
-      size: 347
+      md5: b9e3118a1a785e25f761219cb96e08c2
+      size: 400
     - path: src/stage_03_train.py
       md5: 23e3ef6e25c447fc2fee0f79e11201ba
       size: 1741
     - path: src/utils/all_utils.py
-      md5: 38118203895d721dbd2834c07f7d8a74
-      size: 515
+      md5: 58c6945e3b6b392289735a699fdc2732
+      size: 700
     params:
       params.yaml:
         model_params.ElasticNet.alpha: 0.5
@@ -66,3 +66,47 @@ stages:
     - path: artifacts/model_dir/Elasticnet.model
       md5: 10a67810db06189f2374bdc5ee6984e6
       size: 1316
+  test:
+    cmd: python src/stage_04_evaluate.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/data_dir/test.csv
+      md5: 2234775402fc50bcee60bfbfd1cfb1d5
+      size: 28263
+    - path: artifacts/model_dir/Elasticnet.model
+      md5: 10a67810db06189f2374bdc5ee6984e6
+      size: 1316
+    - path: config/config.yaml
+      md5: b9e3118a1a785e25f761219cb96e08c2
+      size: 400
+    - path: src/stage_04_evaluate.py
+      md5: aec63f761b9dc87f963b11710041fe68
+      size: 2216
+    - path: src/utils/all_utils.py
+      md5: 58c6945e3b6b392289735a699fdc2732
+      size: 700
+    outs:
+    - path: artifacts/reports_dir/scores.json
+      md5: 498bacc0911cf96ceb2a0ae169328dcf
+      size: 100
+  evaluate:
+    cmd: python src/stage_04_evaluate.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/data_dir/test.csv
+      md5: 2234775402fc50bcee60bfbfd1cfb1d5
+      size: 28263
+    - path: artifacts/model_dir/Elasticnet.model
+      md5: 10a67810db06189f2374bdc5ee6984e6
+      size: 1316
+    - path: config/config.yaml
+      md5: b9e3118a1a785e25f761219cb96e08c2
+      size: 400
+    - path: src/stage_04_evaluate.py
+      md5: aec63f761b9dc87f963b11710041fe68
+      size: 2216
+    - path: src/utils/all_utils.py
+      md5: 58c6945e3b6b392289735a699fdc2732
+      size: 700
+    outs:
+    - path: artifacts/reports_dir/scores.json
+      md5: 498bacc0911cf96ceb2a0ae169328dcf
+      size: 100
